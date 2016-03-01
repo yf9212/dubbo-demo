@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+            http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+			http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<!-- 提供方应用信息，用于计算依赖关系 ; 不是匹配条件，不要与提供方一样 -->
+	 <dubbo:application name="dubbo-api" owner="dubbo-api"/>
+	
+	<!-- 使用zookeeper暴露服务地址 -->
+	<dubbo:registry protocol="zookeeper" address="192.168.44.128:2181" file="/root/.dubbo/dubbo-registry-mps-api.cache" />
+	
+	<!-- 用dubbo协议在20983端口暴露服务 -->
+	<dubbo:protocol name="dubbo" port="20880"
+		dispather="all" threadpool="cached" threads="5000" />
+	<!-- 调用服务x秒超时,不重试 -->
+	<dubbo:provider timeout="10000"
+		retries="0" />
+	
+	<dubbo:monitor protocol="registry" />
+
+	<dubbo:service
+		interface="com.jaking.dubbo.api.service.IUserApi"
+		ref="userManagerImpl" version="0.1.0" />
+</beans>
