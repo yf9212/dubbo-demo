@@ -5,10 +5,13 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.springframework.stereotype.Service;
+
 import com.jaking.dubbo.api.dto.User;
 import com.jaking.dubbo.dal.IUserMapper;
 import com.jaking.dubbo.service.IUserService;
 
+@Service("userService")
 public class UserServiceImpl implements IUserService {
 
 	@Resource

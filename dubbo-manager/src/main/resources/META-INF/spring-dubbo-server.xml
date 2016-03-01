@@ -24,5 +24,5 @@
 
 	<dubbo:service
 		interface="com.jaking.dubbo.api.service.IUserApi"
-		ref="userManagerImpl" version="0.1.0" />
+		ref="userManager" version="0.1.0" />
 </beans>

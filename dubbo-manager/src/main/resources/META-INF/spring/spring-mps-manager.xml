@@ -8,9 +8,11 @@
             http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
 	<!-- 加载依赖service层配置 -->
-	<import resource="classpath*:META-INF/spring-mps-service.xml" />
-	<!--  开启可使用-->
-	<import resource="classpath*:META-INF/spring-dubbo-server.xml" />
+	<import resource="classpath*:META-INF/spring-service.xml" />
+	
 	<!-- 扫描本工程bean-->
-	<context:component-scan base-package="com.jaking.dubbo.manager.impl"/>
+	<context:component-scan base-package="com.jaking.dubbo.manager"/>
+	<!--  开启可使用-->
+	<!-- <import resource="classpath*:META-INF/spring-dubbo-server.xml" /> -->
+	
 </beans>
