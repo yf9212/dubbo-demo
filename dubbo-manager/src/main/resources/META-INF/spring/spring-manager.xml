@@ -13,6 +13,6 @@
 	<!-- 扫描本工程bean-->
 	<context:component-scan base-package="com.jaking.dubbo.manager"/>
 	<!--  开启可使用-->
-	<!-- <import resource="classpath*:META-INF/spring-dubbo-server.xml" /> -->
+	<import resource="classpath*:META-INF/spring-dubbo-server.xml" />
 	
 </beans>
