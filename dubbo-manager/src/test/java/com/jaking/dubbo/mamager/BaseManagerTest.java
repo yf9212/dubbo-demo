@@ -1,12 +1,8 @@
 package com.jaking.dubbo.mamager;
 
-import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
-
-@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("/META-INF/spring/spring-manager.xml")
-public abstract class BaseManagerTest {
-
+public abstract class BaseManagerTest  extends AbstractJUnit4SpringContextTests{
 }

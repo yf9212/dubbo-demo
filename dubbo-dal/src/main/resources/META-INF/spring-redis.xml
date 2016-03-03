@@ -18,14 +18,18 @@
 
 	<bean id="jedisConnectionFactory"
 		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
-		p:use-pool="true" p:host-name="${redis.host}" p:port="${redis.port}" p:password="${redis.pass}"
-		p:pool-config-ref="jedisPoolConfig" />
+		p:use-pool="true" p:host-name="${redis.host}" p:port="${redis.port}"
+		p:password="${redis.pass}" p:pool-config-ref="jedisPoolConfig" />
 
 	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate"
 		p:connection-factory-ref="jedisConnectionFactory">
 		<property name="keySerializer">
 			<bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
 		</property>
+	</bean>
+
+	<bean id="redisCache" class="com.jaking.dubbo.dal.cache.RedisTemplateExtension">
+		<constructor-arg ref="redisTemplate"></constructor-arg>
 	</bean>
 
 </beans>
