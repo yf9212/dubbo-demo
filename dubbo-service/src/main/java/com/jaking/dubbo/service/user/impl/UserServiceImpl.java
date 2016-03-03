@@ -1,4 +1,4 @@
-package com.jaking.dubbo.service.impl;
+package com.jaking.dubbo.service.user.impl;
 
 import java.util.List;
 import java.util.Map;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.jaking.dubbo.api.dto.User;
 import com.jaking.dubbo.dal.IUserMapper;
-import com.jaking.dubbo.service.IUserService;
+import com.jaking.dubbo.service.user.IUserService;
 
 @Service("userService")
 public class UserServiceImpl implements IUserService {

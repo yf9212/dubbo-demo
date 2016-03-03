@@ -1,4 +1,4 @@
-package com.jaking.dubbo.service;
+package com.jaking.dubbo.service.user;
 
 import java.util.List;
 import java.util.Map;

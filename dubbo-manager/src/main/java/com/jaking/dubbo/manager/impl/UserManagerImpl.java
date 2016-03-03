@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.jaking.dubbo.api.dto.User;
 import com.jaking.dubbo.api.service.IUserApi;
 import com.jaking.dubbo.manager.IUserManager;
-import com.jaking.dubbo.service.IUserService;
+import com.jaking.dubbo.service.user.IUserService;
 
 @Service("userManager")
 public class UserManagerImpl  implements IUserManager,IUserApi {

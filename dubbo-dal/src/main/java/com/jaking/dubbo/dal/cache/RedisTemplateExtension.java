@@ -1,5 +1,8 @@
 package com.jaking.dubbo.dal.cache;
 
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -25,7 +28,6 @@ public class RedisTemplateExtension<K, V> {
 		getTemplate().setValueSerializer(serializer);
 	}
 	
-	
 	public ListOperations<K, V> opsList(){
 		return this.redisTemplate.opsForList();
 	}
@@ -37,6 +39,61 @@ public class RedisTemplateExtension<K, V> {
 	public HashOperations<K, Object, Object> opsHash(){
 		return this.redisTemplate.opsForHash();
 	}
+	
+	/**
+	 * 删除指定key
+	 * @param k
+	 */
+	public void delete(K k){
+		redisTemplate.delete(k);
+	}
+	
+	/**
+	 * 
+	 * @param key 
+	 * @param timeout
+	 * @param unit
+	 */
+	public void expire(K key,long timeout,TimeUnit unit){
+		redisTemplate.expire(key, timeout, unit);
+	}
+	
+	/**
+	 * 重命名
+	 * @param oldKey
+	 * @param newKey
+	 */
+	public void rename(K oldKey,K newKey){
+		redisTemplate.rename(oldKey, newKey);
+	}
+	
+	/**
+	 * 重命名如果不存在的数据
+	 * @param oldKey
+	 * @param newKey
+	 */
+	public void renameIfAbsent(K oldKey,K newKey){
+		redisTemplate.renameIfAbsent(oldKey, newKey);
+	}
+	
+	/**
+	 * 过期时间,单位分钟
+	 * @param key
+	 * @param timeout
+	 */
+	public void expire(K key,long timeout){
+		expire(key, timeout, TimeUnit.MINUTES);
+	}
+	
+	/**
+	 * 设置K过期,60分钟
+	 * @param k
+	 */
+	public  void expire(K k){
+		expire(k, 60);
+	}
+	
+	/**-----------------------operate List---------------------*/
 	
 	/**
 	 * 获取列表大小
@@ -68,17 +125,31 @@ public class RedisTemplateExtension<K, V> {
 	
 	/**
 	 * List指定位置插入
-	 * @param k
-	 * @param v
+	 * @param k key值
+	 * @param v value值
 	 * @param index
 	 */
-	public  void push(K k,V v,Long index){
+	public  void lSet(K k,V v,Long index){
 		opsList().set(k, index, v);
 	}
 	
-	public  V getValue(K k,Long index){
+	/**
+	 * 获取list列表指定列表的值
+	 * @param k
+	 * @param index
+	 * @return
+	 */
+	public  V lGet(K k,Long index){
 		return opsList().index(k, index);
 	}
 	
+	/**
+	 * 获取整个列表List
+	 * @param k
+	 * @return
+	 */
+	public List<V> lAll(K k){
+		return opsList().range(k, 0, lSize(k));
+	}
 	
 }
