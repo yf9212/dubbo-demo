@@ -3,6 +3,7 @@ package com.jaking.dubbo.mamager.redis;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.data.redis.serializer.JacksonJsonRedisSerializer;
 
@@ -14,10 +15,19 @@ import com.jaking.dubbo.service.utils.SpringContextUtil;
 public class RedisTest extends BaseManagerTest{
 	public static  final Logger log=Logger.getLogger(RedisTest.class);
 	 
-	@Test
+	RedisTemplateExtension<String, User> redisTemplate;
+	/**
+	 * 在@test方法执行之前执行
+	 */
 	@SuppressWarnings("unchecked")
+	@Before
+	public void init(){
+		redisTemplate= SpringContextUtil.context.getBean("redisCache", RedisTemplateExtension.class);
+	}
+	
+	
+	@Test
 	public void addUser(){
-		RedisTemplateExtension<String, User>  redisTemplate= SpringContextUtil.context.getBean("redisCache", RedisTemplateExtension.class);
 		redisTemplate.setValueSerializer(new JacksonJsonRedisSerializer<User>(User.class));
 		String key="userList";
 		for (int i = 0; i < 15; i++) {
@@ -31,31 +41,26 @@ public class RedisTest extends BaseManagerTest{
 	}
 	
 	@Test
-	@SuppressWarnings("unchecked")
 	public void getUser(){
-		RedisTemplateExtension<String, User> redisTemplate =applicationContext.getBean("redisCache", RedisTemplateExtension.class);
+		redisTemplate.setValueSerializer(new JacksonJsonRedisSerializer<User>(User.class));
 		User  user =redisTemplate.getTemplate().opsForValue().get("A102");
-		System.out.println(user.getUserName());
+		log.info(user.getUserName());
 	}
 	
 	@Test
-	@SuppressWarnings("unchecked")
 	public void getUserList(){
-		RedisTemplateExtension<String, User>  redisTemplate= SpringContextUtil.context.getBean("redisCache", RedisTemplateExtension.class);
 		redisTemplate.setValueSerializer(new JacksonJsonRedisSerializer<User>(User.class));
 		String key="userList";
 		List<User>  users= redisTemplate.lAll(key);
+		log.info("list size:"+users.size());
 		for (User user : users) {
 			log.info(user.getUserName());
 		}
 	}
 	
 	@Test
-	@SuppressWarnings("unchecked")
 	public void clearUserList(){
-		RedisTemplateExtension<String, User>  redisTemplate= SpringContextUtil.context.getBean("redisCache", RedisTemplateExtension.class);
 		redisTemplate.setValueSerializer(new JacksonJsonRedisSerializer<User>(User.class));
-		//String key="userList";
 		String oldKey="userList";
 		String newKey="bb";
 		redisTemplate.renameIfAbsent(oldKey, newKey);
