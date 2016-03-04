@@ -27,6 +27,10 @@
 			<bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
 		</property>
 	</bean>
+	
+	<bean id="stringRedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate"
+		p:connection-factory-ref="jedisConnectionFactory">
+	</bean>
 
 	<bean id="redisCache" class="com.jaking.dubbo.dal.cache.RedisTemplateExtension">
 		<constructor-arg ref="redisTemplate"></constructor-arg>
